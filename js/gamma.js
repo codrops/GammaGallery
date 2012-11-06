@@ -1138,8 +1138,31 @@ var Gamma = (function() {
 			} );
 
 		},
+		_preloadNext = function() {
+
+			// preload image for Gamma.current + 1
+			var next = Gamma.current < Gamma.itemsCount - 1 ? Gamma.current + 1 :
+				Gamma.settings.circular ? 0 : Gamma.current,
+				$item = Gamma.items.eq( next ),
+				$img = $item.children( 'img' ),
+				finalConfig = _getFinalImgConfig( {
+
+					sources : $item.data( 'source' ),
+					imgMaxW : $item.data( 'maxwidth' ),
+					imgMaxH : $item.data( 'maxheight' ),
+					wrapper : { width : $window.width() - Gamma.svMargins.horizontal, height : $window.height() - Gamma.svMargins.vertical },
+					image : { width : $img.width(), height : $img.height() }
+
+				} ),	
+				source = finalConfig.source;
+
+			$( '<img/>' ).attr( 'src', source.src );
+
+		},
 		// starts slideshow
 		_startSlideshow = function() {
+
+			_preloadNext();
 
 			Gamma.slideshowtimeout = setTimeout( function() {
 
