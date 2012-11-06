@@ -513,16 +513,6 @@ var Gamma = (function() {
 			}
 
 		},
-		// the slideshow is active only if the page is visible
-		_visChange = function() {
-
-			if( Gamma.slideshow ) {
-
-				isHidden() ? ( _stopSlideshow( true ), Gamma.slideshow = true ) : _prepareSlideshow();
-
-			}
-
-		},
 		// show or hide a specific control button
 		_toggleControl = function( $control, status, animStyle ) {
 
@@ -1114,13 +1104,25 @@ var Gamma = (function() {
 			}, 25 );
 
 		},
+		// the slideshow is active only if the page is visible
+		_visChange = function() {
+
+			if( Gamma.slideshow ) {
+
+				isHidden() ? ( _stopSlideshow( true ), Gamma.slideshow = true ) : _prepareSlideshow();
+
+			}
+
+		},
 		// before slideshow starts
 		_prepareSlideshow = function() {
 
-			if( Gamma.isAnimating ) {
+			if( Gamma.isAnimating && !Gamma.slideshow ) {
 				return false;
 			}
 			Gamma.isAnimating = true;
+
+			clearTimeout( Gamma.slideshowtimeout );
 
 			Gamma.slideshow = true;
 			// container is the window
