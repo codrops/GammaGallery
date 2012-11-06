@@ -1082,9 +1082,13 @@ var Gamma = (function() {
 				} );
 
 				// transition: overlay opacity
-				if( Gamma.settings.overlayAnimated && Gamma.supportTransitions ) {
+				if( Gamma.settings.overlayAnimated ) {
 
-					_setTransition( Gamma.overlay , 'opacity' );
+					if( Gamma.supportTransitions ) {
+
+						_setTransition( Gamma.overlay , 'opacity' );
+
+					}
 
 					_applyAnimation( Gamma.overlay, { 'opacity' : 0 }, Gamma.settings.speed, Gamma.supportTransitions, function() {
 							
